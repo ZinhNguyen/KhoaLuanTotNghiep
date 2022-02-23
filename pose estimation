@@ -1,1 +1,85 @@
 https://ichi.pro/vi/uoc-tinh-tu-the-con-nguoi-dua-tren-deep-learning-su-dung-opencv-va-mediapipe-229516517785718
+https://viso.ai/deep-learning/pose-estimation-ultimate-overview/
+Pose estimation là gì
+Ước lượng tư thế là một nhiệm vụ phổ biến trong thị giác máy tính. Là một lĩnh vực trí tuệ nhân tạo (AI), Thị giác máy tính cho phép máy móc thực hiện các tác vụ xử lý hình ảnh với mục đích bắt chước thị giác của con người.
+Ước tính của Pose là một vấn đề chung trong tầm nhìn máy tính nơi mục tiêu là mục đích phát hiện vị trí và định hướng của một người hoặc một đối tượng. Thông thường, điều này được thực hiện bằng cách dự đoán vị trí của các bàn phím cụ thể như bàn tay, đầu, khuỷu tay, vv trong trường hợp ước tính tư thế của con người.
+Ước tính và theo dõi tư thế của con người là một nhiệm vụ thị giác máy tính bao gồm phát hiện, liên kết và theo dõi các điểm chính ngữ nghĩa, Ví dụ về KeyPoint ngữ nghĩa là "vai phải", "" đầu gối trái "hoặc" đèn phanh trái ".
+Hiệu suất theo dõi Keypoint ngữ nghĩa trong Đoạn phim trực tiếp đòi hỏi các tài nguyên tính toán cao những gì đã cam kết độ chính xác của ước tính tư thế. Với những tiến bộ mới nhất, các ứng dụng mới với các yêu cầu thời gian thực trở nên có thể, chẳng hạn như ô tô tự lái và robot giao hàng kéo dài cuối cùng.
+Ngày nay, các mô hình xử lý hình ảnh mạnh mẽ nhất dựa trên các mạng thần kinh compolutional (CNN). Do đó, các phương pháp tiên tiến thường dựa trên việc thiết kế kiến trúc CNN được thiết kế đặc biệt đối với sự suy luận về tư cách của con người.
+Bottom-up vs. Top-down methods
+Tất cả các cách tiếp cận để ước tính tư thế có thể được nhóm thành các phương thức từ dưới lên và từ trên xuống.
+Các phương thức từ dưới lên Ước tính mỗi khớp cơ thể đầu tiên và sau đó nhóm chúng để tạo thành một tư thế duy nhất. Các phương pháp từ dưới lên được tiên phong bằng DeepCut (một phương thức chúng tôi sẽ đề cập sau chi tiết hơn).
+Các phương pháp từ trên xuống vận hành một máy dò người đầu tiên và ước tính các khớp cơ thể trong các hộp giới hạn được phát hiện.
+Tầm quan trọng của ước tính tư thế
+Trong phát hiện đối tượng truyền thống, mọi người chỉ được coi là một hộp giới hạn (một hình vuông). Bằng cách thực hiện phát hiện tư thế và theo dõi tư thế, máy tính có thể phát triển sự hiểu biết về ngôn ngữ cơ thể người. Tuy nhiên, phương pháp theo dõi tư thế thông thường không đủ nhanh cũng như không đủ mạnh để có khả năng phù hợp.
+
+Phát hiện và theo dõi tư thế thời gian thực hiệu suất cao sẽ thúc đẩy một số xu hướng lớn nhất trong thị lực của máy tính. Ví dụ, theo dõi tư thế của con người trong thời gian thực sẽ cho phép các máy tính phát triển một sự hiểu biết tốt hơn và tự nhiên hơn về hành vi của con người.
+
+Điều này sẽ có một tác động lớn đến các lĩnh vực khác nhau, ví dụ, trong việc lái xe tự trị. Ngày nay, phần lớn các tai nạn xe hơi tự lái được gây ra bởi "robot" lái xe, nơi xe tự lái tiến hành một điểm dừng cho phép nhưng bất ngờ, và một người lái xe của con người gặp sự cố vào chiếc xe tự lái. Với sự phát hiện và theo dõi tư thế theo thời gian thực, các máy tính có thể hiểu và dự đoán hành vi dành cho người đi bộ tốt hơn nhiều - cho phép lái xe tự nhiên hơn.
+Ước tính tư thế con người là gì?
+Ước tính tư thế của con người nhằm mục đích dự đoán các tư thế của các bộ phận cơ thể và các khớp trong hình ảnh hoặc video. Vì các chuyển động của Pose thường được thúc đẩy bởi một số hành động cụ thể của con người, biết về tư thế cơ thể của một con người là rất quan trọng đối với nhận diện hành động.
+Tầm nhìn máy tính sớm hoạt động mô tả cơ thể con người như một con số que để có được cấu trúc tư thế toàn cầu. Tuy nhiên, những cách tiếp cận dựa trên học tập sâu hiện đại đã đạt được những bước đột phá lớn bằng cách cải thiện hiệu suất đáng kể cho cả ước tính tư thế một người và nhiều người. Một số phương pháp ước tính tư thế của con người 2D phổ biến bao gồm OpenPose, CPN, AlphaPose, and HRNet (chúng tôi sẽ bao gồm chúng và những người khác sau này trong bài viết này).
+Trong ước tính tư thế của con người, vị trí của các bộ phận cơ thể con người được sử dụng để xây dựng một biểu diễn cơ thể người (như tư thế bộ xương cơ thể) từ dữ liệu đầu vào trực quan. Do đó, mô hình cơ thể con người là một khía cạnh quan trọng của ước tính tư thế của con người. Nó được sử dụng để thể hiện các tính năng và KeyPoints được trích xuất từ dữ liệu đầu vào trực quan. Thông thường, một cách tiếp cận dựa trên mô hình được sử dụng để mô tả và suy ra cơ thể người và kết xuất tư thế 2D hoặc 3D.
+Hầu hết các phương pháp sử dụng một mô hình động học cứng nhắc n-khớp nơi một cơ thể con người được biểu diễn như một thực thể với các khớp và chân tay, chứa cấu trúc động học cơ thể và thông tin hình dạng cơ thể.
+
+Có ba loại mô hình cho mô hình cơ thể người:
+Kinematic Mode, còn được gọi là mô hình dựa trên bộ xương, được sử dụng để ước tính tư thế 2D cũng như ước tính của tư thế 3D. Mô hình cơ thể con người linh hoạt và trực quan này bao gồm một tập hợp các vị trí chung và định hướng chân tay để thể hiện cấu trúc cơ thể người. Do đó, các mô hình ước tính của bộ xương được sử dụng để thu thập mối quan hệ giữa các bộ phận cơ thể khác nhau. Tuy nhiên, các mô hình động học bị giới hạn trong việc thể hiện thông tin kết cấu hoặc hình dạng.
+Mô hình phẳng, hoặc mô hình dựa trên đường viền, được sử dụng cho ước tính tư thế 2D. Các mô hình phẳng được sử dụng để thể hiện sự xuất hiện và hình dạng của một cơ thể con người. Thông thường, các bộ phận cơ thể được thể hiện bằng nhiều hình chữ nhật xấp xỉ các đường viền cơ thể con người. Một ví dụ phổ biến là mô hình hình dạng hoạt động (asm) được sử dụng để chụp biểu đồ cơ thể con người đầy đủ và các biến dạng hình bóng bằng cách sử dụng phân tích thành phần chính.
+Mô hình thể tích, được sử dụng để ước tính tư thế 3D. Có nhiều mô hình cơ thể con người 3d phổ biến được sử dụng để học tập sâu 3D dựa trên việc phục hồi lưới 3d của con người. Ví dụ: Ghum & GHUML (ITE), là những đường ống học tập sâu cuối cùng có thể được đào tạo trên một bộ dữ liệu có độ phân giải cao của các lần quét toàn thân trên toàn thân trên 60.000 cấu hình của con người để mô hình hình dạng cơ thể người 3d thống kê và có khớp nối. tư thế. Nó có thể được sử dụng để suy luận
+
+ 
+Những thách thức chính của phát hiện tư thế
+Ước tính tư thế của con người là một nhiệm vụ đầy thách thức vì sự xuất hiện của cơ thể gia nhập thay đổi linh hoạt do các dạng quần áo đa dạng, tắc nghẽn tùy ý, các khớp do góc nhìn và bối cảnh nền. Ước tính của Pose cần phải mạnh mẽ để thách thức các biến thể trong thế giới thực như ánh sáng và thời tiết.
+
+Do đó, đó là một thách thức đối với các mô hình xử lý hình ảnh để xác định tọa độ chung của hạt mịn. Điều đặc biệt khó theo dõi các khớp nhỏ và hầu như không nhìn thấy được.
+Ước tính của Pose hoạt động như thế nào?
+Ước tính Pose sử dụng tư thế và định hướng để dự đoán và theo dõi vị trí của một người hoặc đối tượng. Theo đó, ước tính của Pose cho phép các chương trình ước tính các vị trí không gian ("Poses") của một cơ thể trong một hình ảnh hoặc video. Nói chung, hầu hết các ước tính của Pose là 2 bước khung phát hiện các hộp giới hạn của con người và sau đó ước tính tư thế trong mỗi hộp.
+
+Ước tính của Pose hoạt động bằng cách tìm các điểm chính của một người hoặc đối tượng. Chẳng hạn, lấy một người, các điểm chính sẽ là các khớp như khuỷu tay, đầu gối, cổ tay, v.v ... Có hai loại ước tính tư thế: đa tư thế và tư thế duy nhất. Ước tính tư thế duy nhất được sử dụng để ước tính các tư thế của một đối tượng trong một cảnh nhất định, trong khi ước tính đa tư thế được sử dụng khi phát hiện tư thế cho nhiều đối tượng.
+
+Ước tính tư thế của con người trên bộ dữ liệu MS Coco phổ biến có thể phát hiện 17 KeyPoints (Lớp) khác nhau. Mỗi KeyPoint được chú thích với ba số (x, y, v), trong đó x và y đánh dấu tọa độ và v chỉ ra nếu KeyPoint hiển thị.
+"nose", "left_eye", "right_eye", "left_ear", "right_ear", "left_shoulder", "right_shoulder", "left_elbow", "right_elbow", "left_wrist", "right_wrist", "left_hip", "right_hip", "left_knee", "right_knee", "left_ankle", "right_ankle"
+ 
+Các loại Pose Detection
+Ước tính của việc học tập sâu
+Với sự phát triển nhanh chóng của các giải pháp học tập sâu trong những năm gần đây, việc học sâu đã được chứng minh là vượt trội so với các phương pháp thị giác máy tính cổ điển trong các nhiệm vụ khác nhau, bao gồm phân đoạn hình ảnh hoặc phát hiện đối tượng. Do đó, các kỹ thuật học tập sâu mang đến những tiến bộ đáng kể và đạt được hiệu suất trong các nhiệm vụ ước tính của tư thế.
+
+Tiếp theo, chúng tôi sẽ liệt kê và xem xét các phương thức theo dõi và phát hiện tư thế phổ biến của con người.
+The Most popular Pose Estimation methods
+Method #1: OpenPose
+Method #2: High-Resolution Net (HRNet)
+Method #3: DeepCut
+Method #4: Regional Multi-Person Pose Estimation (AlphaPose)
+Method #5: Deep Pose
+Method #6: PoseNet
+Method #7: Dense Pose
+
+Posenet: Posenet là một kiến trúc ước tính tư thế được xây dựng trên Tensorflow.js để chạy trên các thiết bị nhẹ như trình duyệt hoặc thiết bị di động. Do đó, Posenet có thể được sử dụng để ước tính một tư thế hoặc nhiều tư thế.
+
+Sử dụng các trường hợp và ứng dụng ước tính của tư thế
+Ước tính tư thế của con người đã được sử dụng trong một loạt các ứng dụng, bao gồm tương tác máy tính người, phân tích chuyển động, thực tế tăng cường và robot.
+
+Ước tính của Pose có các ứng dụng trong nhiều lĩnh vực, một số trong số đó được liệt kê dưới đây.
+Most Popular Pose Estimation Applications
+Application #1: Human Activity Estimation
+Application #2: Motion Transfer and Augmented Reality
+Application #3: Training Robots
+Application #4: Motion Tracking for Consoles
+Application #5: Human Fall Detection
+
+Ước tính hoạt động của con người
+Một ứng dụng khá rõ ràng về ước tính tư thế đang theo dõi và đo lường hoạt động và chuyển động của con người. Các kiến trúc như DensePose, Posenet hoặc Opectpose thường được sử dụng cho hoạt động, cử chỉ hoặc nhận dạng Gait. Ví dụ về theo dõi hoạt động của con người thông qua việc sử dụng ước lượng tư thế bao gồm:
+
+Ứng dụng để phát hiện cử chỉ ngồi
+Truyền thông ngôn ngữ toàn thân / ký hiệu đầy đủ (ví dụ: tín hiệu cảnh sát giao thông)
+Các ứng dụng để phát hiện nếu một người bị rơi xuống hoặc bị bệnh
+Các ứng dụng để hỗ trợ phân tích bóng đá, bóng rổ và thể thao
+Các ứng dụng để phân tích các kỹ thuật khiêu vũ (ví dụ: trong các điệu nhảy múa ba lê)
+Ứng dụng của tư thế học tập cho các công việc cơ thể và tinh tế
+Các ứng dụng trong tăng cường bảo mật và giám sát
+Ước tính của con người bằng cách sử dụng nghiên cứu học tập sâu giúp thiết kế và phát triển ứng dụng dựa trên tư thế của con người. Ước tính tư thế là hữu ích trong việc theo dõi các bộ phận cơ thể của con người. Điều này giúp biết sự liên kết của các bộ phận cơ thể người và biết đặc điểm của con người tốt hơn từ hình ảnh. Điều này mở ra một cơ hội trong việc phát triển các ứng dụng dựa trên so sánh tư thế của con người, bộ phận cơ thể và sự liên kết. Ý tưởng chính của việc nhận ra các hành động của con người với việc ước tính và theo dõi của cơ thể có thể mở ra một ứng dụng trong thế giới thực để hiểu cảnh và các ứng dụng thị giác như thể dục. Cách tiếp cận này hoàn toàn phụ thuộc vào mô hình ước tính tư thế [10, 9]. Nỗ lực của họ trong việc đề xuất một mô hình ước tính tư thế và Dan OVED làm cho nó có sẵn cho Tensorflow.js làm cho ứng dụng này có thể mang tính phù hợp. Mô hình Tensorflow Posenet xác định 17 bộ phận cơ thể như bộ xương. Trong số đó chúng ta chỉ sử dụng một số bộ phận cơ thể để so sánh. Bảng 1 cho thấy các bộ phận cơ thể được sử dụng để so sánh hình ảnh tham chiếu với dữ liệu người dùng. Chúng tôi sử dụng mô hình Posenet được phát triển trong Thư viện ML5JS.
+P5JS giúp sử dụng mô hình Posenet và thực hiện các tính toán về kết quả. Sự hiểu biết cảnh và ước lượng tư thế được tìm nạp bằng cách tiếp cận của họ. Cách tiếp cận được đề xuất của chúng tôi bao gồm ước tính tư thế cho hình ảnh được tham chiếu và cho đầu vào của người dùng. Tư thế tập thể dục được thực hiện bởi các chuyên gia được so sánh với tư thế hiện tại được thực hiện bởi người dùng. Chúng tôi tập hợp tư thế tập thể dục chuyên nghiệp và phát triển bộ xương trước. Khi người dùng cố gắng tư thế xác định trước bởi Professional, hãy lấy dữ liệu người dùng trực tiếp và phát triển bộ xương cho người dùng. Chúng tôi sử dụng cách tiếp cận toán học để so sánh các hình ảnh. Bộ xương kết quả để hình ảnh tham chiếu được lưu trữ dưới dạng tệp JSON. Với bộ xương được tham chiếu, chúng tôi khớp với nó với bộ xương người dùng được tạo trong thời gian thực để gợi ý các sửa chữa. Sơ đồ kiến trúc của gia sư thể dục được thể hiện trong Hình 1. So sánh giữa bộ xương cơ thể được thực hiện trên cơ sở độ dốc giữa tọa độ.
+https://tiensu.github.io/blog/86_human_pose_estimation/
+https://arxiv.org/pdf/2109.01376.pdf
+https://arxiv.org/abs/1803.08225
+https://www.sciencedirect.com/topics/engineering/pose-estimation
