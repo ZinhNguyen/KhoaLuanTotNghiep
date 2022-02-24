@@ -1,0 +1,19 @@
+Pose Estimation là gì?
+Pose Estimation(Ước lượng tư thế) là một vấn đề khá phổ biến trong lĩnh vực thị giác máy tính để phát hiện và phân tích tư thế của con người hoặc một đối tượng.  
+ Cách thức Hoạt Động
+Ước tính Pose sử dụng tư thế và định hướng để dự đoán và theo dõi vị trí của một người hoặc đối tượng. Theo đó, ước tính của Pose cho phép các chương trình ước tính các vị trí không gian ("Poses") của một cơ thể trong một hình ảnh hoặc video. Nói chung, hầu hết các ước tính của Pose là 2 bước khung phát hiện các hộp giới hạn của con người và sau đó ước tính tư thế trong mỗi hộp.
+Ước tính của Pose hoạt động bằng cách tìm các điểm chính của một người hoặc đối tượng. Chẳng hạn, lấy một người, các điểm chính sẽ là các khớp như khuỷu tay, đầu gối, cổ tay, v.v ... Có hai loại ước tính tư thế: đa tư thế và tư thế duy nhất. Ước tính tư thế duy nhất được sử dụng để ước tính các tư thế của một đối tượng trong một cảnh nhất định, trong khi ước tính đa tư thế được sử dụng khi phát hiện tư thế cho nhiều đối tượng.
+Hướng Tiếp Cận nhiều người
+Nhận diện khung xương nhiều người trong cùng khung hình là bài toán khó hơn nhiều so với trường hợp một người vì khó xác định được vị trí và số người trong ảnh. Thông thường để giải quyết điều trên ta có hai cách để tiếp cận: 
+-Tiệp cận theo hướng từ trên xuống (Top- down): Trước tiên chúng ta sử dụng một hệ thống phát hiện người trong ảnh (person detection . Sau đó mỗi đối tượng được đóng khung và phân tích các đặc trưng riêng trong mỗi khung thuộc đối tượng đó.
+-Tiếp cận theo hướng từ dưới lên (Bottom-up):  Ta phát hiện các bộ phận ( Keypoint) có mặt trong ảnh và đánh dấu. Tiếp đến ta liên kết các bộ phận của từng người lại theo đúng vị trí.
+Với Số lượng người tăng lên thì việc tính toán của phương thức top-down tăng lên đáng kể. Trong khi đó Phương thức Bottom-up vẫn ổn định. Tuy nhiên, nếu có lượng lớn người chồng chéo thì phương pháp bottom-up phải đối mặt với thách thức đối với nhóm các bộ phận cơ thể tương ứng. 
+Các Loại Mô Hình
+Có 3 loại mô hình cơ thể người được sử dụng nhiều nhất : Mô hình dựa trên khung Xương, Dựa trên đường viền và dựa trên khối lượng.
+Mô hình dựa trên bộ xương bao gồm một tập hợp các khớp (điểm chính) như mắt cá chân, đầu gối, vai, khuỷu tay, cổ tay và các hướng chi bao gồm cấu trúc xương của cơ thể người. Mô hình này được sử dụng cả trong kỹ thuật ước tính tư thế người 2D và 3D vì tính linh hoạt của nó.
+Mô hình dựa trên đường viền bao gồm đường viền và chiều rộng thô của thân và các chi, nơi các bộ phận cơ thể được hiển thị bằng các đường ranh giới và hình chữ nhật của hình bóng một người.
+Mô hình dựa trên khối lượng bao gồm các hình dạng và tư thế cơ thể người 3D được thể hiện bằng các mô hình dựa trên khối lượng có lưới và hình dạng hình học, thường được chụp bằng quét 3D.
+Nguồn: https://arxiv.org/pdf/2006.01423.pdf
+Những thách thức chính của phát hiện tư thế
+Ước tính tư thế của con người là một nhiệm vụ đầy thách thức vì sự xuất hiện của cơ thể gia nhập thay đổi linh hoạt do các dạng quần áo đa dạng, tắc nghẽn tùy ý, các khớp do góc nhìn và bối cảnh nền. Ước tính của Pose cần phải mạnh mẽ để thách thức các biến thể trong thế giới thực như ánh sáng và thời tiết.
+
