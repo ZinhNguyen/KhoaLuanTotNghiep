@@ -1,19 +1,43 @@
 Pose Estimation là gì?
-Pose Estimation(Ước lượng tư thế) là một vấn đề khá phổ biến trong lĩnh vực thị giác máy tính để phát hiện và phân tích tư thế của con người hoặc một đối tượng.  
- Cách thức Hoạt Động
-Ước tính Pose sử dụng tư thế và định hướng để dự đoán và theo dõi vị trí của một người hoặc đối tượng. Theo đó, ước tính của Pose cho phép các chương trình ước tính các vị trí không gian ("Poses") của một cơ thể trong một hình ảnh hoặc video. Nói chung, hầu hết các ước tính của Pose là 2 bước khung phát hiện các hộp giới hạn của con người và sau đó ước tính tư thế trong mỗi hộp.
-Ước tính của Pose hoạt động bằng cách tìm các điểm chính của một người hoặc đối tượng. Chẳng hạn, lấy một người, các điểm chính sẽ là các khớp như khuỷu tay, đầu gối, cổ tay, v.v ... Có hai loại ước tính tư thế: đa tư thế và tư thế duy nhất. Ước tính tư thế duy nhất được sử dụng để ước tính các tư thế của một đối tượng trong một cảnh nhất định, trong khi ước tính đa tư thế được sử dụng khi phát hiện tư thế cho nhiều đối tượng.
-Hướng Tiếp Cận nhiều người
-Nhận diện khung xương nhiều người trong cùng khung hình là bài toán khó hơn nhiều so với trường hợp một người vì khó xác định được vị trí và số người trong ảnh. Thông thường để giải quyết điều trên ta có hai cách để tiếp cận: 
--Tiệp cận theo hướng từ trên xuống (Top- down): Trước tiên chúng ta sử dụng một hệ thống phát hiện người trong ảnh (person detection . Sau đó mỗi đối tượng được đóng khung và phân tích các đặc trưng riêng trong mỗi khung thuộc đối tượng đó.
--Tiếp cận theo hướng từ dưới lên (Bottom-up):  Ta phát hiện các bộ phận ( Keypoint) có mặt trong ảnh và đánh dấu. Tiếp đến ta liên kết các bộ phận của từng người lại theo đúng vị trí.
-Với Số lượng người tăng lên thì việc tính toán của phương thức top-down tăng lên đáng kể. Trong khi đó Phương thức Bottom-up vẫn ổn định. Tuy nhiên, nếu có lượng lớn người chồng chéo thì phương pháp bottom-up phải đối mặt với thách thức đối với nhóm các bộ phận cơ thể tương ứng. 
+Pose Estimation(Ước tính tư thế) là một vấn đề khá phổ biến trong lĩnh vực thị giác máy tính để phát hiện và phân tích tư thế của con người hoặc một đối tượng. Ước tính tư thế hoạt động bằng cách tìm các điểm chính của một người hoặc đối tượng. Chẳng hạn, lấy một người, các điểm chính sẽ là các khớp như khuỷu tay, đầu gối, cổ tay, v.v ... Có 2 loại kỹ thuật chính trong những mô hình dùng để phát hiện hình dáng người đó là ước tính tư thế 2D và ước tính tư thế 3D.
+Ước tính tư thế 2D (2D Pose Estimation): Trong loại này chỉ cần ước tính vị trí của các khớp thân trong không gian 2D so với dữ liệu đầu vào(khung hình hoặc video). Vị trí được thể hiện với tọa độ x và y cho mỗi điểm chính.
+ Ước tính tư thế 3D (3D Pose Estimation): Trong loại ước tính này, hình ảnh sẽ được chuyển từ dạng 2D thành đối tượng 3D bằng cách dự đoán thêm một tọa độ z. Ước tính tư thế 3D cho phép chúng ta dự đoán chính xác vị trí trong không gian của người hoặc vật.
+https://openaccess.thecvf.com/content_cvpr_2017/papers/Chen_3D_Human_Pose_CVPR_2017_paper.pdf 
 Các Loại Mô Hình
-Có 3 loại mô hình cơ thể người được sử dụng nhiều nhất : Mô hình dựa trên khung Xương, Dựa trên đường viền và dựa trên khối lượng.
-Mô hình dựa trên bộ xương bao gồm một tập hợp các khớp (điểm chính) như mắt cá chân, đầu gối, vai, khuỷu tay, cổ tay và các hướng chi bao gồm cấu trúc xương của cơ thể người. Mô hình này được sử dụng cả trong kỹ thuật ước tính tư thế người 2D và 3D vì tính linh hoạt của nó.
-Mô hình dựa trên đường viền bao gồm đường viền và chiều rộng thô của thân và các chi, nơi các bộ phận cơ thể được hiển thị bằng các đường ranh giới và hình chữ nhật của hình bóng một người.
-Mô hình dựa trên khối lượng bao gồm các hình dạng và tư thế cơ thể người 3D được thể hiện bằng các mô hình dựa trên khối lượng có lưới và hình dạng hình học, thường được chụp bằng quét 3D.
+Có 3 loại mô hình cơ thể người được sử dụng phổ biến nhất hiện nay là : Mô hình dựa trên khung Xương, dựa trên đường viền và dựa trên khối lượng.
+Mô hình dựa trên bộ xương(Skeleton-based model hoặc Kinematic model) bao gồm một tập hợp các khớp (điểm chính) như mắt cá chân, đầu gối, vai, khuỷu tay, cổ tay và các hướng chi bao gồm cấu trúc xương của cơ thể người. Mô hình này được sử dụng cả trong kỹ thuật ước tính tư thế người 2D và 3D vì tính linh hoạt của nó.
+Mô hình dựa trên đường viền(Contour-based model hoặc Planar model) bao gồm đường viền và chiều rộng thô của thân và các chi, nơi các bộ phận cơ thể được hiển thị bằng các đường ranh giới và hình chữ nhật của hình bóng một người.
+Mô hình dựa trên khối lượng(Volume-based model hoặc Volumetric model) bao gồm các hình dạng và tư thế cơ thể người 3D được thể hiện bằng các mô hình dựa trên khối lượng có lưới và hình dạng hình học, thường được chụp bằng quét 3D.
 Nguồn: https://arxiv.org/pdf/2006.01423.pdf
-Những thách thức chính của phát hiện tư thế
-Ước tính tư thế của con người là một nhiệm vụ đầy thách thức vì sự xuất hiện của cơ thể gia nhập thay đổi linh hoạt do các dạng quần áo đa dạng, tắc nghẽn tùy ý, các khớp do góc nhìn và bối cảnh nền. Ước tính của Pose cần phải mạnh mẽ để thách thức các biến thể trong thế giới thực như ánh sáng và thời tiết.
+Các Phương Pháp tiếp cận
+Trong tất cả phương pháp ước tính hình dáng hiện tại có thể được phân thành 2 hướng tiếp cận chính là: Tiếp cận theo hướng từ dưới lên và theo hướng từ trên xuống.
+Tiếp cận theo hướng từ trên xuống (Top- down): Trước tiên chúng ta sử dụng một hệ thống phát hiện người trong ảnh . Sau đó mỗi đối tượng được đóng khung và phân tích các đặc trưng riêng trong mỗi khung thuộc đối tượng đó.
+Tiếp cận theo hướng từ dưới lên (Bottom-up):  Ta phát hiện các bộ phận ( Keypoint) có mặt trong ảnh và đánh dấu. Tiếp đến ta liên kết các bộ phận của từng người lại theo đúng vị trí.
+Nhận xét: Khi Số lượng người tăng lên thì việc tính toán của phương thức top-down tăng lên đáng kể. Trong khi đó Phương thức Bottom-up vẫn ổn định. Tuy nhiên, nếu có lượng lớn người chồng chéo thì phương pháp bottom-up phải đối mặt với thách thức lớn đối với việc nhóm các bộ phận cơ thể tương ứng. 
+Thư viện hỗ Trợ
+Dưới đây là 5 bộ thư viện phổ biến nhất trong việc ước tính tư thế của con người.
+OpenPose
+là một thư viện phát hiện khớp của con người miễn phí hoạt động trong thời gian thực. Nó phát hiện các điểm chính trên cơ thể, mặt, bàn tay và chân. Đây là hệ thống nhận diện nhiều người đầu tiên với tổng cộng 135 điểm chính trên một hình ảnh đầu vào duy nhất. Đây là một trong những thư viện ước tính tư thế đa người phổ biến nhất mà sử dụng cách tiếp cận từ dưới lên.
+PoseDection
+	là một thư viện phát hiện tư thế thời gian thực nguồn mở có thể phát hiện các tư thế của con người trong hình ảnh hoặc video. Đó là một kiến trúc ước tính tư thế được xây dựng trên Tensorflow.js và cho phép bạn phát hiện các bộ phận cơ thể như khuỷu tay, hông, cổ tay, đầu gối, mắt cá chân và những thứ khác cho một tư thế duy nhất hoặc nhiều tư thế.
+Nó được xây dựng để chạy hiệu quả trên các thiết bị nhẹ như trình duyệt hoặc thiết bị di động. Gói này cung cấp ba mô hình hiện đại để chạy ước tính tư thế thời gian thực:
+Movenet (phát hiện 17 điểm chính và chạy ở tốc độ 50+ FPS)
+BlazePose (phát hiện 33 điểm chính)
+Posenet (có khả năng phát hiện nhiều tư thế và mỗi tư thế chứa 17 điểm chính)
+DensePose
+	là một thư viện nguồn mở miễn phí, có thể ánh xạ tất cả các pixel của con người của hình ảnh 2D RGB vào mô hình dựa trên bề mặt 3D của cơ thể trong thời gian thực. Thư viện này được triển khai trong khung Detectron, được cung cấp bởi Caffe2 và cũng có thể được sử dụng cho các vấn đề ước tính một và nhiều đối tượng.
+AlphaPose
+Alphapose là một thư viện ước tính tư thế đa người có nguồn mở nguồn mở, sử dụng cách tiếp cận từ trên xuống phổ biến và rất chính xác. Thư viện này giúp phát hiện các tư thế với sự hiện diện của các hộp giới hạn của con người không chính xác, và đó là một kiến trúc tối ưu để xác định các tư thế của con người bằng các hộp giới hạn được phát hiện tối ưu.
+HRNet (High-Resolution Net)
+	HRNet là một kiến trúc được sử dụng để ước tính hình dáng con người để tìm những gì chúng ta biết là điểm chính đối với các đối tượng hoặc người cụ thể trong hình ảnh. Nó duy trì các biểu diễn độ phân giải cao trong suốt quá trình và dự đoán một điểm nóng điểm chính rất chính xác.
+Ứng Dụng 
+Ước tính của Pose có các ứng dụng trong nhiều lĩnh vực, một số trong số đó được liệt kê 
+bao gồm:
+Ứng dụng để phát hiện cử chỉ ngồi
+Các ứng dụng để phát hiện nếu một người bị té ngã hoặc bị bệnh
+Các ứng dụng để hỗ trợ phân tích bóng đá, bóng rổ và thể thao
+Các ứng dụng để phân tích các kỹ thuật khiêu vũ (ví dụ: trong các điệu nhảy múa ba lê)
+Ứng dụng của tư thế học tập cho các công việc cơ thể và tinh tế
+Các ứng dụng trong tăng cường bảo mật và giám sát
+…
 
