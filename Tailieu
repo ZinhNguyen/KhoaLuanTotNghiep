@@ -1,6 +1,6 @@
 https://viso.ai/deep-learning/pose-estimation-ultimate-overview/
 https://www.tensorflow.org/lite/examples/pose_estimation/overview
-Model tensorflow Js: 
+//Model tensorflow Js: 
 https://github.com/tensorflow/tfjs-models
 // Clip for posenet tensorflow js
 https://www.youtube.com/watch?v=PyxsziqatFE
@@ -12,6 +12,9 @@ https://export.arxiv.org/pdf/2006.10204
 https://export.arxiv.org/pdf/1603.06937
 https://tiensu.github.io/blog/86_human_pose_estimation/
 https://www.analyticsvidhya.com/blog/2022/01/a-comprehensive-guide-on-human-pose-estimation/
+
+//General Fall Detection
+https://towardsdatascience.com/fall-detection-using-pose-estimation-a8f7fd77081d
 
 
 //paper
