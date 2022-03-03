@@ -1,0 +1,2 @@
+Phần kết luận
+Để tối ưu trong bài toán nhận diện tư thế, trong phạm vi đề tài, chúng tôi sẽ sử dụng MoveNet (một mô hình ước lượng tư thế được phát hành năm 2021). Gồm 2 phiên bản là Lightning và Thunder. Trong đó phiên bản Thunder được sử dụng với mục đích cần độ chính xác cao đồng thời có thể hổ trợ trên các nền tảng cấu hình thấp như desktops, laptops và điện thoại. MoveNet có hiệu năng vượt trội hơn PoseNet(mô hình ước lượng tư thế phát hành năm 2017) trong nhiều mặt , do được huấn luyện với 2 bộ dữ liệu gồm COCO và Active (bộ dữ liệu nội bộ từ Google).     
